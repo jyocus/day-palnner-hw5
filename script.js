@@ -44,3 +44,22 @@ function stringToNumber(timeString) {
     }
 }
 
+//Within this loop I understand that we need to define new IDs so that they can be compared, then using moment.js can compare the times on the calendar with the actual time
+let counter = 1
+for(const property in timeBlocks) { //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in
+    //The for...in statement will go through the timeBlocks object and the output will be logged as the object and it's value
+    let textEntry = "#text-entry" + counter;
+    $(textEntry).text(timeBlocks[property]);
+    let timeId = "#time" + counter;
+    let presentHour = moment().hour();
+    let timeString = $(timeId).text();
+    let timeNumber = stringToNumber(timeString);  
+    if(timeNumber < presentHour) { // conditionals for the current time against the time on the calendar to decide which class to add
+      $(textEntry).addClass("past");
+    } else if (timeNumber > presentHour) {
+      $(textEntry).addClass("future");
+    } else {
+      $(textEntry).addClass("present");
+    }
+    counter ++; // This allows for the increment of the counter
+  }
