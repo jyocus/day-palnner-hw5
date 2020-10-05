@@ -6,7 +6,14 @@
     // if (time=id) .attr(#present) ... and so forth
 // - Need to add local storage so the page saves tasks upon refresh - use localStorage.getItem 
 
-
+//the .ready in jquery allows js code to run as soon as the DOM is safe to manipulate https://api.jquery.com/ready/ 
+$(document).ready(function(){
+    if(!localStorage.getItem('timeBlocks')) {
+      updateCalendarTasks(workDay);
+    } else {
+      updateCalendarTasks(JSON.parse(localStorage.getItem('timeBlocks')));
+    }
+  })
 
 //Pre-established ID for the current time on provided HTML - Need "let" since the date will change? Const gave me an error
 let currentDay = $("#currentDay");
@@ -73,3 +80,9 @@ for(const property in timeBlocks) { //https://developer.mozilla.org/en-US/docs/W
 //     } 
 //   });
 
+$("button".click(function() {
+    value = $(this).siblings("textarea").val();
+    timestring = $(this).siblings("div").text();
+
+    //need to add function below to call here
+}))
