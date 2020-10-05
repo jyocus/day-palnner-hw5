@@ -9,7 +9,7 @@
 //the .ready in jquery allows js code to run as soon as the DOM is safe to manipulate https://api.jquery.com/ready/ 
 $(document).ready(function(){
     if(!localStorage.getItem('timeBlocks')) {
-      updateCalendarTasks(workDay);
+      updateCalendarTasks(timeBlocks);
     } else {
       updateCalendarTasks(JSON.parse(localStorage.getItem('timeBlocks')));
     }
@@ -80,9 +80,18 @@ for(const property in timeBlocks) { //https://developer.mozilla.org/en-US/docs/W
 //     } 
 //   });
 
-$("button".click(function() {
+$("button").click(function() {
     value = $(this).siblings("textarea").val();
     timestring = $(this).siblings("div").text();
 
     //need to add function below to call here
-}))
+});
+
+
+//This will got through each ".cal-row" class in the html and find the children div and textareas for each row 
+function updateCalendarTasks(dayObject) {
+    $(".cal-row").each(function(index) {
+        let res = $(this).children("div");
+        $(this).children("textarea").text(dayObject[res.text()]);
+    })
+}
