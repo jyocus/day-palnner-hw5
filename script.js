@@ -34,23 +34,6 @@ let timeBlocks = {
     "5:00 PM": "",
 }
 
-// Tried using parseInt() but this function does not give me the output I need, referenced another project to understand the switch function
-// Ex: parseInt (8:00 AM, 8)
-function stringToNumber(timeString) {
-    switch(timeString) {
-        case  "8:00 AM": return 8;
-        case  "9:00 AM": return 9;
-        case "10:00 AM": return 10;
-        case "11:00 AM": return 11;
-        case "12:00 PM": return 12;
-        case "1:00 PM": return 13;
-        case "2:00 PM": return 14;
-        case "3:00 PM": return 15;
-        case "4:00 PM": return 16;
-        case "5:00 PM": return 17;
-    }
-}
-
 //Within this loop I understand that we need to define new IDs so that they can be compared, then using moment.js can compare the times on the calendar with the actual time
 let counter = 1
 for(const property in timeBlocks) { //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in
@@ -71,6 +54,29 @@ for(const property in timeBlocks) { //https://developer.mozilla.org/en-US/docs/W
     counter ++; // This allows for the increment of the counter so it loops through each row
   }
 
+  $("button").click(function() {
+    value = $(this).siblings("textarea").val();
+    timeString = $(this).siblings("div").text();
+
+    saveItem(timeString, value);
+});
+
+  // Tried using parseInt() but this function does not give me the output I need, referenced another project to understand the switch function
+// Ex: parseInt (8:00 AM, 8)
+function stringToNumber(timeString) {
+    switch(timeString) {
+        case  "8:00 AM": return 8;
+        case  "9:00 AM": return 9;
+        case "10:00 AM": return 10;
+        case "11:00 AM": return 11;
+        case "12:00 PM": return 12;
+        case "1:00 PM": return 13;
+        case "2:00 PM": return 14;
+        case "3:00 PM": return 15;
+        case "4:00 PM": return 16;
+        case "5:00 PM": return 17;
+    }
+}
 // for above tried something similar that I found on stackoverflow but had difficulty https://stackoverflow.com/questions/38899291/jquery-highlight-row-within-specific-time
 //$('#timeTable .dateRow').each(function () {
 //     var startTime = $(this).closest("div").find("#time-1") .text();
@@ -80,12 +86,35 @@ for(const property in timeBlocks) { //https://developer.mozilla.org/en-US/docs/W
 //     } 
 //   });
 
-$("button").click(function() {
-    value = $(this).siblings("textarea").val();
-    timestring = $(this).siblings("div").text();
 
-    //need to add function below to call here
-});
+
+function loadData() {
+    result = localStorage.getItem('timeBlocks')
+    return (result ? result : timeBlocks);
+}
+
+function beginStorage() {
+    localStorage.setItem('timeBlocks', JSON.stringify(timeBlocks));
+}
+
+function saveToStorage(dayObject) {
+    localStorage.setItem('timeBlocks', JSON.stringify(dayObject));
+}
+
+function saveItem(timeString, val) {
+    if(!localStorage.getItem('timeBlocks')) {
+        beginStorage();
+    }
+    
+    let scheduleHours = JSON.parse(localStorage.getItem('timeBlocks'));
+timeBlocks[timeString] = val
+
+saveToStorage(scheduleHours);
+
+}
+
+
+
 
 
 //This will got through each ".cal-row" class in the html and find the children div and textareas for each row 
@@ -95,3 +124,4 @@ function updateCalendarTasks(dayObject) {
         $(this).children("textarea").text(dayObject[res.text()]);
     })
 }
+
