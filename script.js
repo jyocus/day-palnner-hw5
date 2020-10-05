@@ -87,12 +87,13 @@ function stringToNumber(timeString) {
 //   });
 
 
-
+//https://blog.logrocket.com/the-complete-guide-to-using-localstorage-in-javascript-apps-ba44edb53a36/
 function loadData() {
     result = localStorage.getItem('timeBlocks')
     return (result ? result : timeBlocks);
 }
 
+//Since local storage can only store strings we use JSON.stringify to convert the values
 function beginStorage() {
     localStorage.setItem('timeBlocks', JSON.stringify(timeBlocks));
 }
