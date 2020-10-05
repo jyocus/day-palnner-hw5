@@ -61,5 +61,15 @@ for(const property in timeBlocks) { //https://developer.mozilla.org/en-US/docs/W
     } else {
       $(textEntry).addClass("present");
     }
-    counter ++; // This allows for the increment of the counter
+    counter ++; // This allows for the increment of the counter so it loops through each row
   }
+
+// for above tried something similar that I found on stackoverflow but had difficulty https://stackoverflow.com/questions/38899291/jquery-highlight-row-within-specific-time
+//$('#timeTable .dateRow').each(function () {
+//     var startTime = $(this).closest("div").find("#time-1") .text();
+//     var endTime = $(this).closest("div").find("#time-2").text();
+//     if (moment().>(startTime)) {
+//         $(this).addClass('past'); 
+//     } 
+//   });
+
